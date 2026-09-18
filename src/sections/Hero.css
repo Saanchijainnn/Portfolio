@@ -1,0 +1,99 @@
+.hero-section {
+  background-color: var(--color-cream);
+  color: var(--color-green-dark);
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xl) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  gap: var(--space-lg);
+}
+
+.hero-greeting {
+  font-family: var(--font-family-heading);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-bordo);
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.hero-tagline {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  color: var(--color-green-dark);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  max-width: 650px;
+  opacity: 0.9;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-pill);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-bordo);
+  color: var(--color-cream);
+  border: 2px solid var(--color-bordo);
+  box-shadow: 0 4px 14px rgba(108, 21, 30, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-bordo-light);
+  border-color: var(--color-bordo-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 21, 30, 0.35);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-bordo);
+  border: 2px solid var(--color-bordo);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-bordo);
+  color: var(--color-cream);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 21, 30, 0.25);
+}
+
+@media (max-width: 480px) {
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
