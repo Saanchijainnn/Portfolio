@@ -75,6 +75,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
@@ -102,6 +106,7 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  color: inherit;
 }
 
 /* Base Layout Utilities */
@@ -114,9 +119,5 @@ button {
 .section {
   padding: var(--space-3xl) 0;
   border-bottom: 1px solid rgba(245, 218, 191, 0.1);
-}
-
-.navbar, .footer {
-  padding: var(--space-lg) 0;
-  background-color: var(--color-surface);
+  min-height: 40vh;
 }
