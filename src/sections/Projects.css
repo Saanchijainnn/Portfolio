@@ -1,49 +1,98 @@
 .projects-section {
+  background-color: var(--color-green);
+  color: var(--color-cream);
+  padding: var(--space-3xl) 0;
+}
+
+.projects-subtitle {
+  color: var(--color-text-muted);
+}
+
+/* Category Filter Bar */
+.projects-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.projects-filter-btn {
+  padding: var(--space-xs) var(--space-lg);
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  background-color: rgba(245, 218, 191, 0.1);
+  color: var(--color-cream);
+  border: 1px solid var(--color-border-subtle);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.projects-filter-btn:hover {
+  background-color: rgba(245, 218, 191, 0.2);
+  color: var(--color-cream-light);
+}
+
+.projects-filter-btn.active {
   background-color: var(--color-cream);
   color: var(--color-green-dark);
-  padding: var(--space-4xl) 0;
-  position: relative;
-}
-
-.projects-header {
-  text-align: center;
-  margin-bottom: var(--space-3xl);
-}
-
-.projects-title {
-  font-family: var(--font-family-heading);
-  font-size: clamp(2rem, 4vw, 3rem);
-  color: var(--color-bordo);
   font-weight: var(--font-weight-bold);
-  margin-bottom: var(--space-xs);
-  position: relative;
-  display: inline-block;
+  border-color: var(--color-cream);
 }
 
-.projects-title::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 4px;
-  background-color: var(--color-bordo);
-  margin: var(--space-xs) auto 0;
-  border-radius: var(--radius-full);
+.projects-filter-btn:focus-visible {
+  outline: 2px solid var(--color-cream);
+  outline-offset: 3px;
 }
 
+/* Responsive Projects Grid */
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-xl);
 }
 
-@media (min-width: 640px) {
+/* Tablet: 2 Columns */
+@media (min-width: 768px) and (max-width: 1023px) {
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+/* Desktop: 3 Columns with Featured Span */
 @media (min-width: 1024px) {
   .projects-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  /* Featured project spans 2 columns */
+  .featured-item {
+    grid-column: span 2;
+  }
+}
+
+.projects-grid-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* More on GitHub Footer Link */
+.projects-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-3xl);
+}
+
+.projects-more-btn {
+  color: var(--color-cream);
+  border-color: var(--color-cream);
+}
+
+.projects-more-btn:hover {
+  background-color: var(--color-cream);
+  color: var(--color-green-dark);
 }

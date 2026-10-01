@@ -5,7 +5,7 @@
   background-color: var(--color-green);
   color: var(--color-cream);
   transition: background-color var(--transition-normal), box-shadow var(--transition-normal);
-  border-bottom: 1px solid rgba(245, 218, 191, 0.1);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .navbar-header.scrolled {
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
+  height: var(--navbar-height);
 }
 
 .navbar-logo {
@@ -48,6 +48,7 @@
   transition: color var(--transition-fast);
 }
 
+/* Using existing light token var(--color-cream-light) for underline contrast over green navbar */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -55,15 +56,17 @@
   left: 0;
   width: 0%;
   height: 2px;
-  background-color: var(--color-bordo);
+  background-color: var(--color-cream-light);
   transition: width var(--transition-normal);
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: var(--color-cream-light);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -72,22 +75,24 @@
   color: var(--color-cream);
   padding: var(--space-xs);
   border-radius: var(--radius-sm);
+  min-width: 44px;
+  min-height: 44px;
   transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .hamburger-btn:hover {
-  background-color: rgba(245, 218, 191, 0.1);
+  background-color: var(--color-border-subtle);
 }
 
 .mobile-menu {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 70px;
+  top: var(--navbar-height);
   left: 0;
   right: 0;
   background-color: var(--color-green);
-  border-bottom: 1px solid rgba(245, 218, 191, 0.15);
+  border-bottom: 1px solid var(--color-border-subtle);
   padding: var(--space-md) var(--space-lg);
   gap: var(--space-md);
   box-shadow: var(--shadow-lg);
@@ -110,12 +115,32 @@
   font-weight: var(--font-weight-medium);
   color: var(--color-cream);
   padding: var(--space-sm) 0;
-  border-bottom: 1px solid rgba(245, 218, 191, 0.05);
+  border-bottom: 1px solid var(--color-border-subtle);
   transition: color var(--transition-fast);
 }
 
-.mobile-nav-link:hover {
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
   color: var(--color-cream-light);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Scroll progress bar under navbar */
+.navbar-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--color-bordo);
+  transform-origin: 0%;
+  z-index: 1001;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-progress-bar {
+    display: none !important;
+  }
 }
 
 /* Responsive Styles */

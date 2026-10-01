@@ -1,90 +1,90 @@
-import React from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaUserGraduate } from 'react-icons/fa6';
+import { FaGraduationCap, FaMapMarkerAlt, FaBriefcase, FaCode } from 'react-icons/fa';
+import { containerVariants, itemVariants } from '../animations';
 import './About.css';
 
+const QUICK_FACTS = [
+  {
+    icon: <FaMapMarkerAlt size={16} aria-hidden="true" />,
+    label: 'Location',
+    value: 'Jaipur, Rajasthan, India',
+  },
+  {
+    icon: <FaGraduationCap size={16} aria-hidden="true" />,
+    label: 'Education',
+    value: 'B.Tech CSE (AI & ML), JECRC University',
+  },
+  {
+    icon: <FaBriefcase size={16} aria-hidden="true" />,
+    label: 'Seeking',
+    value: 'Product-based Internship',
+  },
+  {
+    icon: <FaCode size={16} aria-hidden="true" />,
+    label: 'Core Focus',
+    value: 'Full-Stack (MERN) & AI/ML',
+  },
+];
+
 export default function About() {
-  const techStack = [
-    'MongoDB',
-    'Express',
-    'React',
-    'Node.js',
-    'Python',
-    'scikit-learn',
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
-  };
+  const [hasPhoto, setHasPhoto] = useState(true);
 
   return (
     <section id="about" className="about-section">
       <div className="container">
-        <motion.div 
-          className="about-header"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="about-title">About Me</h2>
-        </motion.div>
+        {/* Shared Section Header */}
+        <div className="section-header">
+          <h2 className="section-title">About Me</h2>
+        </div>
 
         <motion.div
-          className="about-grid"
+          className={`about-layout ${hasPhoto ? 'about-layout--two-col' : 'about-layout--single-col'}`}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Avatar / Photo Spot */}
-          <motion.div className="about-image-wrapper" variants={itemVariants}>
-            {/* TODO: Replace this avatar placeholder div with an actual <img> tag (e.g. <img src="/profile.jpg" alt="Saanchi" className="about-profile-img" />) */}
-            <div className="about-avatar-placeholder" title="TODO: Replace with actual photo">
-              <div className="avatar-icon-wrapper">
-                <FaUserGraduate size={40} />
+          {/* Render photo frame only if image exists and loads cleanly */}
+          {hasPhoto && (
+            <motion.div className="about-photo-col" variants={itemVariants}>
+              <div className="about-photo-frame">
+                <img
+                  src="/profile.jpg"
+                  alt="Saanchi - CSE (AI & ML) Student"
+                  className="about-photo"
+                  loading="lazy"
+                  onError={() => setHasPhoto(false)}
+                />
               </div>
-              <span className="avatar-text">Saanchi</span>
-              <span className="avatar-subtext">CSE (AI & ML) Student</span>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
 
           {/* Text Content */}
-          <motion.div className="about-text-content" variants={itemVariants}>
-            <h3 className="about-subtitle">
-              Passionate about Full-Stack Development & Artificial Intelligence
+          <motion.div className="about-text-col" variants={itemVariants}>
+            <h3 className="about-heading">
+              Building Full-Stack Solutions &amp; Practical Machine Learning
             </h3>
 
             <p className="about-paragraph">
-              I am a Computer Science & Engineering (AI & ML) student at JECRC University, Jaipur. 
+              I am a Computer Science &amp; Engineering (AI &amp; ML) student at JECRC University, Jaipur. 
               Driven by curiosity and innovation, I specialize in full-stack web development (MERN) 
-              and machine learning—actively building real-world projects and working toward securing an 
-              internship at a product-based company.
+              and machine learning—actively building real-world projects like Revive and working toward securing 
+              an internship at a product-based company.
             </p>
 
-            {/* Tech Stack Pills */}
-            <div className="tech-stack-container">
-              <h4 className="tech-stack-heading">Core Tech Stack</h4>
-              <div className="tech-pills">
-                {techStack.map((tech) => (
-                  <span key={tech} className="tech-pill">
-                    {tech}
-                  </span>
+            {/* Quick Facts Card */}
+            <div className="about-quick-facts">
+              <h4 className="quick-facts-title">Quick Facts</h4>
+              <div className="quick-facts-grid">
+                {QUICK_FACTS.map((fact) => (
+                  <div key={fact.label} className="quick-fact-item">
+                    <span className="quick-fact-icon">{fact.icon}</span>
+                    <div className="quick-fact-details">
+                      <span className="quick-fact-label">{fact.label}</span>
+                      <span className="quick-fact-value">{fact.value}</span>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>

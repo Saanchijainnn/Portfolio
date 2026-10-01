@@ -1,4 +1,7 @@
 :root {
+  /* Layout Dimensions */
+  --navbar-height: 70px;
+
   /* Color Palette */
   --color-bordo: #6C151E;
   --color-green: #0F3D3A;
@@ -12,7 +15,7 @@
   --color-cream-light: #fdf5ec;
   --color-cream-dark: #e6be9c;
   
-  /* Text & Surface Colors */
+  /* Text, Surface & Border Colors */
   --color-bg: var(--color-green-dark);
   --color-surface: var(--color-green);
   --color-surface-hover: var(--color-green-light);
@@ -20,6 +23,7 @@
   --color-text-muted: rgba(245, 218, 191, 0.75);
   --color-accent: var(--color-bordo);
   --color-accent-hover: var(--color-bordo-light);
+  --color-border-subtle: rgba(245, 218, 191, 0.1);
 
   /* Typography */
   --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -50,13 +54,13 @@
   --space-3xl: 4rem;    /* 64px */
   --space-4xl: 6rem;    /* 96px */
 
-  /* Border Radius */
+  /* Border Radius - Merged full/pill into one token */
   --radius-sm: 0.25rem;  /* 4px */
   --radius-md: 0.5rem;   /* 8px */
   --radius-lg: 1rem;     /* 16px */
   --radius-xl: 1.5rem;   /* 24px */
   --radius-full: 9999px;
-  --radius-pill: 50px;
+  --radius-pill: var(--radius-full); /* Alias for backward compatibility */
 
   /* Shadows & Transitions */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -76,7 +80,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -92,7 +102,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
-  color: var(--color-cream);
+  color: var(--color-text);
   line-height: 1.2;
 }
 
@@ -109,6 +119,35 @@ button {
   color: inherit;
 }
 
+/* Accessible focus-visible styles across all interactive controls */
+a:focus-visible, 
+button:focus-visible, 
+input:focus-visible, 
+textarea:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 2px solid var(--color-cream);
+  outline-offset: 3px;
+}
+
+/* Skip-to-content accessibility link */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: var(--space-md);
+  background-color: var(--color-bordo);
+  color: var(--color-cream);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  z-index: 9999;
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus-visible {
+  top: var(--space-sm);
+}
+
 /* Base Layout Utilities */
 .container {
   max-width: 1200px;
@@ -118,6 +157,92 @@ button {
 
 .section {
   padding: var(--space-3xl) 0;
-  border-bottom: 1px solid rgba(245, 218, 191, 0.1);
+  border-bottom: 1px solid var(--color-border-subtle);
   min-height: 40vh;
+}
+
+/* Shared Section Headers & Titles */
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.section-title {
+  display: inline-block;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  position: relative;
+  padding-bottom: var(--space-sm);
+  color: var(--color-text);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--color-bordo);
+  border-radius: var(--radius-full);
+}
+
+/* Light modifier for dark green sections */
+.section-title--light {
+  color: var(--color-cream);
+}
+
+.section-title--light::after {
+  background-color: var(--color-cream-light);
+}
+
+.section-subtitle {
+  margin-top: var(--space-xs);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+/* Shared Button Design System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-primary {
+  background-color: var(--color-bordo);
+  color: var(--color-cream);
+  border-color: var(--color-bordo);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-bordo-light);
+  border-color: var(--color-bordo-light);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-text);
+  color: var(--color-green-dark);
+  box-shadow: var(--shadow-md);
 }

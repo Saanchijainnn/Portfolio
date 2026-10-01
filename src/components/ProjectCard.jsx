@@ -1,69 +1,98 @@
-import React from 'react';
 import { FaGithub, FaArrowUpRightFromSquare } from 'react-icons/fa6';
 import './ProjectCard.css';
 
-export default function ProjectCard({ title, description, tags, github, demo }) {
-  const hasGithub = github && github !== '#' && github !== '';
-  const hasDemo = demo && demo !== '#' && demo !== '';
+export default function ProjectCard({
+  title,
+  problem,
+  description,
+  highlight,
+  tags = [],
+  github,
+  demo,
+  image,
+  category,
+  isFeatured = false,
+}) {
+  // Build links array from truthy URLs only to prevent rendering disabled/empty links
+  const links = [
+    github && {
+      key: 'github',
+      label: `${title} on GitHub`,
+      url: github,
+      icon: <FaGithub size={18} aria-hidden="true" />,
+    },
+    demo && {
+      key: 'demo',
+      label: `${title} Live Demo`,
+      url: demo,
+      icon: <FaArrowUpRightFromSquare size={16} aria-hidden="true" />,
+    },
+  ].filter(Boolean);
 
   return (
-    <div className="project-card">
-      <div>
-        <div className="project-card-header">
-          <h3 className="project-title">{title}</h3>
-          <div className="project-links">
-            {hasGithub ? (
-              <a
-                href={github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-icon-link"
-                aria-label={`GitHub repository for ${title}`}
-                title="View GitHub Repository"
-              >
-                <FaGithub size={20} />
-              </a>
-            ) : (
-              <span 
-                className="project-icon-link disabled"
-                title="TODO: Add GitHub Repository Link"
-              >
-                <FaGithub size={20} />
-              </span>
-            )}
+    <article className={`project-card ${isFeatured ? 'project-card--featured' : ''}`}>
+      {/* Optional screenshot rendered at top with aspect-ratio 16/9, lazy loading */}
+      {image && (
+        <div className="project-card-image-wrapper">
+          <img
+            src={image}
+            alt={`Screenshot of ${title}`}
+            className="project-card-image"
+            loading="lazy"
+            width="600"
+            height="337"
+          />
+        </div>
+      )}
 
-            {hasDemo ? (
-              <a
-                href={demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-icon-link"
-                aria-label={`Live demo for ${title}`}
-                title="View Live Demo"
-              >
-                <FaArrowUpRightFromSquare size={18} />
-              </a>
-            ) : (
-              <span 
-                className="project-icon-link disabled"
-                title="TODO: Add Live Demo Link"
-              >
-                <FaArrowUpRightFromSquare size={18} />
-              </span>
-            )}
+      <div className="project-card-body">
+        <div className="project-card-header">
+          <div>
+            {category && <span className="project-category-badge">{category}</span>}
+            <h3 className="project-title">{title}</h3>
           </div>
+
+          {/* Render mapped links array only if valid URLs exist */}
+          {links.length > 0 && (
+            <div className="project-links">
+              {links.map((link) => (
+                <a
+                  key={link.key}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-icon-link"
+                  aria-label={link.label}
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
-        <p className="project-description">{description}</p>
-      </div>
+        {/* One-line problem statement */}
+        {problem && <p className="project-problem">{problem}</p>}
 
-      <div className="project-tags">
-        {tags && tags.map((tag) => (
-          <span key={tag} className="project-tag-pill">
-            {tag}
-          </span>
-        ))}
+        {/* What I built description */}
+        <p className="project-description">{description}</p>
+
+        {/* Technical highlight */}
+        {highlight && (
+          <div className="project-highlight">
+            <span className="project-highlight-label">Highlight:</span> {highlight}
+          </div>
+        )}
+
+        {/* Tech Pills */}
+        <div className="project-tags">
+          {tags.map((tag) => (
+            <span key={tag} className="project-tag-pill">
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
+    </article>
   );
 }
